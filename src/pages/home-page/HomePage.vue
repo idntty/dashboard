@@ -66,7 +66,11 @@
 </template>
 <script>
 import api from '@/services/api/'
+import Vue from 'vue'
+import VueNativeSock from 'vue-native-websocket'
 import TransactionsTable from '@/components/transactions-table'
+Vue.use(VueNativeSock, 'ws://18.196.54.102:8080/ws')
+
 export default {
   name: 'HomePage',
   components: {
@@ -109,6 +113,10 @@ export default {
     } catch (e) {
       console.error(e)
     }
+    this.$options.sockets.onmessage = (data) => {
+      console.warn(data)
+    }
+
   }
 }
 </script>
