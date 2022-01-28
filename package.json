@@ -15,6 +15,7 @@
     "sass": "^1.49.0",
     "vue": "^2.6.11",
     "vue-async-operations": "^1.0.2",
+    "vue-deepset": "^0.6.3",
     "vue-layout-broker": "0.0.3",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.3",

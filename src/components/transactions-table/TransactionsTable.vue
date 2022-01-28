@@ -1,7 +1,11 @@
 <template>
       <el-table
         :data="tableData"
+         v-loading="loading"
         style="width: 100%">
+        <div slot="empty">
+          NO DATA
+        </div>
         <el-table-column
           width="200"
           prop="date"
@@ -19,7 +23,7 @@
               <router-link
                 class="el-link el-link--primary"
                 :to="{name: 'account', params: { id: scope.row.account }}">
-                {{scope.row.account}}
+                {{shortString(scope.row.account)}}
               </router-link>
           </template>
         </el-table-column>
@@ -31,7 +35,7 @@
               <router-link
                 class="el-link el-link--primary"
                 :to="{name: 'transaction', params: { id: scope.row.transaction }}">
-                  {{scope.row.transaction}}
+                  {{shortString(scope.row.transaction)}}
                 </router-link>
           </template>
         </el-table-column>
@@ -43,54 +47,34 @@
       </el-table>
 </template>
 <script>
+import { shortString } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
-  data () {
-    return {
-      tableData: [{
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }, {
-        date: '21/01/2022 - 16:01:10',
-        type: 'No type',
-        account: 'e3ef067a7107e035fca246b101b03289d7738649',
-        transaction: 'e3ef067a7107e035fca246b101b03289d7738649',
-        fee: 0.0157
-      }],
+  props: {
+    transactions: {
+      type: Array,
+      default: () => {return []}
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
-  }
+  },
+  computed: {
+    tableData () {
+      return this.transactions.map((row) => {
+        return {
+          date: 'no date',
+          type: 'no type',
+          account: row.senderAccount || row.senderPublicKey,
+          transaction: row.id,
+          fee: `${row.fee || 0} Ⱡ`
+        }
+      })
+    }
+  },
+  methods: {
+    shortString
+  },
 }
 </script>
