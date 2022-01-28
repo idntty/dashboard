@@ -3,42 +3,38 @@
     <div class="container">
       <h1>Info</h1>
       <div class="spacer2x"></div>
-
       <el-row :gutter="20">
         <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card shadow="never" class="counters-card">
+          <el-card class="counters-card" shadow="never">
             <el-row  type="flex" align="middle" justify="space-between" :gutter="20">
               <el-col class="counters-card__title">
                 <h3>Blocks</h3>
               </el-col>
               <el-col class="text-right">
-                <i class="counters-card__icon el-icon-box"></i>
                 <span class="counters-card__number">{{blocksNumber}}</span>
               </el-col>
             </el-row>
           </el-card>
         </el-col>
         <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card shadow="never">
-            <el-row  type="flex" align="middle" justify="space-between">
+          <el-card class="counters-card" shadow="never">
+            <el-row type="flex" align="middle" justify="space-between">
               <el-col class="counters-card__title">
                 <h3>Transactions</h3>
               </el-col>
               <el-col class="text-right">
-                <i class="counters-card__icon el-icon-coin"></i>
                 <span class="counters-card__number">{{transactionsNumber}}</span>
               </el-col>
             </el-row>
           </el-card>
         </el-col>
         <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card shadow="never">
+          <el-card class="counters-card" shadow="never">
             <el-row  type="flex" align="middle" justify="space-between" :gutter="20">
               <el-col class="counters-card__title">
                 <h3>Peers</h3>
               </el-col>
               <el-col class="text-right">
-                <i class="counters-card__icon el-icon-user"></i>
                 <span class="counters-card__number">{{peersNumber}}</span>
               </el-col>
             </el-row>

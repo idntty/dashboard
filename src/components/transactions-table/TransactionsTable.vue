@@ -21,10 +21,12 @@
           label="Account">
           <template slot-scope="scope">
               <router-link
+                v-if="linkToAccount"
                 class="el-link el-link--primary"
                 :to="{name: 'account', params: { id: scope.row.account }}">
                 {{shortString(scope.row.account)}}
               </router-link>
+              <div v-else>{{shortString(scope.row.account)}}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -34,7 +36,7 @@
           <template slot-scope="scope">
               <router-link
                 class="el-link el-link--primary"
-                :to="{name: 'transaction', params: { id: scope.row.transaction }}">
+                :to="{name: 'transaction', params: { id: scope.row.transaction, blockHeight: scope.row.height }}">
                   {{shortString(scope.row.transaction)}}
                 </router-link>
           </template>
@@ -58,6 +60,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    linkToAccount: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -68,6 +74,7 @@ export default {
           type: 'no type',
           account: row.senderAccount || row.senderPublicKey,
           transaction: row.id,
+          height: row.height,
           fee: `${row.fee || 0} Ⱡ`
         }
       })

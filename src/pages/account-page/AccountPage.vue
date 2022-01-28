@@ -32,11 +32,13 @@
           <div slot="header" class="clearfix">
             <h3>Validators</h3>
           </div>
-          <div v-for="(validator, index) in account.identity.validators" :key="index">
-            <span>{{validator.split(':')[0]}}</span>
-            <span class="type-icon">{{validator.split(':')[2]}}</span>
-            <span>{{validator.split(':')[1]}}</span>
-          </div>
+          <el-row
+            v-for="(validator, index) in account.identity.validators" :key="index"
+            type="flex" align="middle" justify="space-between" :gutter="20">
+            <el-col v-for="(validatorItem, index) in validator.split(':')" :key="index">
+              {{validatorItem.length > 20 ? shortString(validatorItem) : validatorItem}}
+            </el-col>
+          </el-row>
         </el-card>
         <div class="spacer2x"></div>
 
@@ -79,6 +81,7 @@
         <TransactionsTable
           :transactions="transactions"
           :loading="$async.getAccountTransactions.$pending"
+          :linkToAccount="false"
         />
         <div class="spacer4x"></div>
       </div>
