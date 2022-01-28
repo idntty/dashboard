@@ -9,12 +9,24 @@
   color: #00adff
 
 .el-card,
-.el-input__inner,
+.el-table,
 .el-table tr
   background: $backgroundColor
 
 .el-loading-mask
-  background: rgba(55, 60, 68, 0.7)
+  background: rgba(30, 30, 47, 0.7)
 
-.el-card__header
-  background: #354256
+.el-input__inner,
+.el-card__header,
+.el-table th
+  background: $backgroundAccentColor
+
+.el-table--enable-row-hover .el-table__body tr:hover > td
+  background-color: $backgroundAccentColor
+
+.el-input__inner:focus,
+.el-input__inner:hover
+  border-color: $backgroundAccentColor
+
+.el-input__inner::placeholder
+  opacity: 0.5

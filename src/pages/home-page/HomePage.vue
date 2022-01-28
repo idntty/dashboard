@@ -59,7 +59,7 @@
       <div class="spacer2x"></div>
 
       <el-button type="primary">Load more transactions</el-button>
-      <div class="spacer2x"></div>
+      <div class="spacer4x"></div>
 
     </div>
   </div>

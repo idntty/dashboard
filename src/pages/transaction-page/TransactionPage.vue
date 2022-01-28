@@ -82,7 +82,6 @@
             </el-col>
           </el-row>
         </el-card>
-        <div class="spacer4x"></div>
       </div>
 
       <div v-if="$async.getTransactionInfo.$rejected">
@@ -95,6 +94,8 @@
         >
         </el-alert>
       </div>
+
+      <div class="spacer4x"></div>
 
 
     </div>

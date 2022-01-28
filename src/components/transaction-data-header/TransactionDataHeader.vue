@@ -219,7 +219,7 @@
           </el-table>
         </div>
 
-        <div class="spacer"></div>
+        <div class="spacer2x"></div>
 
         <div>
           <h4>Participants</h4>
@@ -237,11 +237,12 @@
         </div>
         <div class="spacer"></div>
         <div class="hr"/>
-        <div class="spacer"></div>
+        <div class="spacer2x"></div>
 
         <h4>Comments</h4>
         <div class="spacer"></div>
         {{transaction.asset.comments}}
+        <div class="spacer"></div>
       </el-card>
       <div class="spacer2x"></div>
     </div>
