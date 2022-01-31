@@ -65,20 +65,12 @@
   </div>
 </template>
 <script>
+
 import api from '@/services/api/'
-import TransactionsTable from '@/components/transactions-table'
-
+// import { getClient } from '@/services/lisk-api/'
 import { apiClient } from '@liskhq/lisk-client';
-
-let clientCache;
-
-export const getClient = async () => {
-    if (!clientCache) {
-        clientCache = await apiClient.createWSClient('ws://18.196.54.102:8080/ws');
-    }
-    return clientCache;
-};
-
+import TransactionsTable from '@/components/transactions-table'
+let client
 export default {
   name: 'HomePage',
   components: {
@@ -92,6 +84,7 @@ export default {
       transactionsNumber: 0,
       lastBlockId: undefined,
       transactionsList: [],
+      client: undefined
     }
   },
   asyncOperations: {
@@ -108,6 +101,9 @@ export default {
   methods: {
     submitSearch () {
       console.log('submitSearch')
+    },
+    updateTransactionsList (newTransactions) {
+      this.transactionsList.unshift(newTransactions)
     }
   },
   async created () {
@@ -124,14 +120,27 @@ export default {
   },
   async mounted () {
     try {
-      const client = await getClient();
-      console.log(client)
-      client.subscribe('app:block:new',(response) => {
-        console.log(response)
+      client = await apiClient.createWSClient(process.env.VUE_APP_WS_BASE);
+      console.warn('WSclient created')
+      client.subscribe('app:block:new', ({block}) => {
+        const decodedBlock = client.block.decode(Buffer(block));
+        const blockJSON = client.block.toJSON(decodedBlock);
+        if (blockJSON.payload.length) {
+          console.log('Get updated transactions list')
+          this.updateTransactionsList(blockJSON.payload)
+        }
       })
+
     } catch (e) {
       console.error(e)
     }
+  },
+  beforeDestroy () {
+    client.disconnect().then(() => {
+      console.warn('WSclient disconnected')
+    }).catch((err) => {
+      console.error(err)
+    });
   }
 }
 </script>
