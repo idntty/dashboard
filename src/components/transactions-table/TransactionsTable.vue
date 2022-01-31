@@ -49,6 +49,7 @@
       </el-table>
 </template>
 <script>
+import hashJs from 'hash.js'
 import { shortString } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
@@ -69,10 +70,10 @@ export default {
   computed: {
     tableData () {
       return this.transactions.map((row) => {
-        return {
+         return {
           date: 'no date',
           type: 'no type',
-          account: row.senderAccount || row.senderPublicKey,
+          account: row.senderAccount || this.hash(row.senderPublicKey),
           transaction: row.id,
           height: row.height,
           fee: `${row.fee || 0} Ⱡ`
@@ -81,7 +82,13 @@ export default {
     }
   },
   methods: {
-    shortString
-  },
+    shortString,
+    hash (string) {
+      const pkBuf = Buffer.from(string, 'hex')
+      const hash = hashJs.sha256().update(pkBuf).digest('hex')
+      return hash.slice(0, 40)
+
+    }
+  }
 }
 </script>
