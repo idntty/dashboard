@@ -47,7 +47,7 @@
       <div class="spacer"></div>
       <el-form label-position="top" @submit="submitSearch">
         <el-form-item>
-          <el-input v-model="searchValue" placeholder="Search an address, delegate, transaction or block"></el-input>
+          <el-input v-model="searchValue" placeholder="Search an address or transaction"></el-input>
         </el-form-item>
       </el-form>
       <div class="spacer2x"></div>
@@ -58,7 +58,7 @@
       <TransactionsTable :transactions="transactionsList" :loading="$async.getTransactionsList.$pending"/>
       <div class="spacer2x"></div>
 
-      <el-button type="primary">Load more transactions</el-button>
+      <el-button @click="getMoreTransactions" type="primary">Load more transactions</el-button>
       <div class="spacer4x"></div>
 
     </div>
@@ -67,7 +67,6 @@
 <script>
 
 import api from '@/services/api/'
-// import { getClient } from '@/services/lisk-api/'
 import { apiClient } from '@liskhq/lisk-client';
 import TransactionsTable from '@/components/transactions-table'
 let client
@@ -84,7 +83,7 @@ export default {
       transactionsNumber: 0,
       lastBlockId: undefined,
       transactionsList: [],
-      client: undefined
+      limit: 2
     }
   },
   asyncOperations: {
@@ -94,8 +93,8 @@ export default {
     getBlockData (blockId) {
       return api.getBlockById(blockId)
     },
-    getTransactionsList () {
-      return api.getTransactionsList()
+    getTransactionsList (limit, offset) {
+      return api.getTransactionsList(limit, offset)
     },
   },
   methods: {
@@ -104,6 +103,10 @@ export default {
     },
     updateTransactionsList (newTransactions) {
       this.transactionsList.unshift(newTransactions)
+    },
+    async getMoreTransactions () {
+      const result = await this.$async.getTransactionsList.$perform(this.limit, this.transactionsList.length)
+      console.log(result)
     }
   },
   async created () {
@@ -112,7 +115,7 @@ export default {
       this.peersNumber = nodeInfo.data.network.seedPeers.length
       this.blocksNumber = nodeInfo.data.height
       this.transactionsNumber = '---'
-      const transactionsResponse = await this.$async.getTransactionsList.$perform()
+      const transactionsResponse = await this.$async.getTransactionsList.$perform(this.limit, 0)
       this.transactionsList = transactionsResponse.data
     } catch (e) {
       console.error(e)
