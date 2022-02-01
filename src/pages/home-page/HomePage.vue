@@ -70,7 +70,7 @@
       <TransactionsTable :transactions="transactionsList" :loading="$async.getTransactionsList.$pending"/>
       <div class="spacer2x"></div>
 
-      <el-button @click="getMoreTransactions" type="primary">Load more transactions</el-button>
+      <el-button @click="getMoreTransactions" type="primary">LOAD MORE TRANSACTIONS</el-button>
       <div class="spacer4x"></div>
 
     </div>
@@ -196,6 +196,9 @@ export default {
       client.subscribe('app:block:new', ({block}) => {
         const decodedBlock = client.block.decode(Buffer(block));
         const blockJSON = client.block.toJSON(decodedBlock);
+        // console.log(blockJSON)
+        // console.log(blockJSON.payload)
+        // console.log(blockJSON.payload.length)
         if (blockJSON.payload.length) {
           console.log('Get updated transactions list')
           this.updateTransactionsList(blockJSON.payload)

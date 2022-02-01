@@ -28,7 +28,14 @@
               <h4>Type</h4>
             </el-col>
             <el-col :md="20" :xs="12">
-              {{ transactionType }}
+              <el-popover
+                placement="top-start"
+                title="Transaction type"
+                width="200"
+                trigger="hover"
+                :content="transactionType">
+                <img slot="reference" width="25" :src="transactionTypesIcons[transactionType]" :alt="transactionType">
+              </el-popover>
             </el-col>
           </el-row>
           <div class="spacer"></div>
@@ -104,7 +111,7 @@
 <script>
 import api from '@/services/api/'
 import { shortString } from '@/modules/short-string.js'
-import { defineTransactionType } from '@/modules/transaction-types.js'
+import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
 import TransactionDataHeader from '@/components/transaction-data-header'
 export default {
   name: 'TransactionPage',
@@ -119,6 +126,7 @@ export default {
   data() {
     return {
       transaction: undefined,
+      transactionTypesIcons
     }
   },
   computed: {

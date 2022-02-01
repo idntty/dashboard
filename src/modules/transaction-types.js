@@ -20,13 +20,14 @@ export function defineTransactionType (moduleId, assetId) {
 
 }
 
+const BASE_ICON_PATH = '/img/assetIcons/'
 export const transactionTypesIcons = {
-  identityAsset: 'icon-identityAsset',
-  validationAsset: 'icon-validationAsset',
-  invalidationAsset: 'icon-invalidationAsset',
-  authorityAsset: 'icon-authorityAsset',
-  delegationAsset: 'icon-delegationAsset',
-  undelegationAsset: 'icon-undelegationAsset',
-  signatureAsset: 'icon-signatureAsset',
-  unknownAsset: 'icon-unknownAsset'
+  identityAsset: `${BASE_ICON_PATH}identityAsset.png`,
+  validationAsset: `${BASE_ICON_PATH}validationAsset.png`,
+  invalidationAsset: `${BASE_ICON_PATH}invalidationAsset.png`,
+  authorityAsset: `${BASE_ICON_PATH}authorityAsset.png`,
+  delegationAsset: `${BASE_ICON_PATH}delegationAsset.png`,
+  undelegationAsset: `${BASE_ICON_PATH}undelegationAsset.png`,
+  signatureAsset: `${BASE_ICON_PATH}signatureAsset.png`,
+  unknownAsset: `${BASE_ICON_PATH}unknownAsset.png`,
 }

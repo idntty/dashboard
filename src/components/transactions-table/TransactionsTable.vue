@@ -15,9 +15,19 @@
       <el-table-column
         prop="type"
         label="Type">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            title="Transaction type"
+            width="200"
+            trigger="hover"
+            :content="scope.row.type">
+            <img slot="reference" width="25" :src="transactionTypesIcons[scope.row.type]" :alt="scope.row.type">
+          </el-popover>
+        </template>
       </el-table-column>
       <el-table-column
-        width="400"
+        width="320"
         prop="account"
         label="Account">
         <template slot-scope="scope">
@@ -31,7 +41,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="400"
+        width="320"
         prop="transaction"
         label="Transaction">
         <template slot-scope="scope">
@@ -63,6 +73,7 @@
 </template>
 <script>
 import hashJs from 'hash.js'
+import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
 import { shortString } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
@@ -83,7 +94,8 @@ export default {
   data () {
     return {
       itemsPerPage: 3,
-      currentPage: 1
+      currentPage: 1,
+      transactionTypesIcons
     }
   },
   computed: {
@@ -91,7 +103,7 @@ export default {
       return this.transactions.map((row) => {
          return {
           date: `no date`,
-          type: 'no type',
+          type: defineTransactionType(row.moduleID, row.assetID),
           account: row.senderAccount || this.hash(row.senderPublicKey),
           transaction: row.id,
           height: row.height,
