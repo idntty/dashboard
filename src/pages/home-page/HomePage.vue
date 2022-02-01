@@ -45,11 +45,23 @@
 
       <h2>Search</h2>
       <div class="spacer"></div>
-      <el-form label-position="top" @submit="submitSearch">
+      <el-form label-position="top" @submit.native.prevent="submitSearch">
         <el-form-item>
-          <el-input v-model="searchValue" placeholder="Search an address or transaction"></el-input>
+          <el-input v-model="searchQuery" placeholder="Search an address or transaction"></el-input>
         </el-form-item>
       </el-form>
+
+      <div v-if="searchResult">
+        <div>{{searchResult.title}}
+        <router-link
+          class="el-link el-link--primary"
+          :to="{
+            name: searchResult.type,
+            params: { id: searchResult.data.id }}">
+            {{searchResult.data.id}}
+          </router-link>
+        </div>
+      </div>
       <div class="spacer2x"></div>
 
       <h2>Last Transactions</h2>
@@ -77,13 +89,14 @@ export default {
   },
   data() {
     return {
-      searchValue: '',
+      searchQuery: '',
       peersNumber: 0,
       blocksNumber: 0,
       transactionsNumber: 0,
       lastBlockId: undefined,
       transactionsList: [],
-      limit: 2
+      limit: 2,
+      searchResult: null
     }
   },
   asyncOperations: {
@@ -96,17 +109,72 @@ export default {
     getTransactionsList (limit, offset) {
       return api.getTransactionsList(limit, offset)
     },
+    getAccountInfo (id) {
+      return api.getAccountInfo(id)
+    },
+    getTransactionInfo (id) {
+      return api.getTransactionInfo(id)
+    },
+  },
+  watch: {
+    searchQuery (val) {
+      if (!val.length) {
+        this.searchResult = null
+      }
+    }
   },
   methods: {
-    submitSearch () {
-      console.log('submitSearch')
+    async submitSearch () {
+      if (this.searchQuery.length === 64) {
+        try {
+          const {data} = await api.getTransactionInfo(this.searchQuery)
+          this.searchResult = {
+            type: 'transaction',
+            title: 'Transaction found: ',
+            data: {
+              id: data.id
+            }
+          }
+        } catch (e) {
+          //
+        }
+      }
+      else if (this.searchQuery.length === 40) {
+        try {
+          const {data} = await api.getAccountInfo(this.searchQuery)
+          this.searchResult = {
+            type: 'account',
+            title: 'Account found: ',
+            data: {
+              id: data.address
+            }
+          }
+        } catch (e) {
+          //
+        }
+      }
+      else {
+          this.searchResult = {
+            type: 'noresult',
+            title: 'Nothing found.',
+            data: {
+              id: ''
+            }
+          }
+      }
     },
     updateTransactionsList (newTransactions) {
       this.transactionsList.unshift(newTransactions)
     },
     async getMoreTransactions () {
-      const result = await this.$async.getTransactionsList.$perform(this.limit, this.transactionsList.length)
-      console.log(result)
+      try {
+        const result = await this.$async.getTransactionsList.$perform(this.limit, this.transactionsList.length)
+        if (result.meta.total > this.transactionsList.length) {
+          this.transactionsList.push(...result.data)
+        }
+      } catch (e) {
+        console.error(e)
+      }
     }
   },
   async created () {
