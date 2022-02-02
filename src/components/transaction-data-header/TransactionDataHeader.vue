@@ -38,7 +38,7 @@
             <h4>Account</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            {{shortString(getAccountFromKey(transaction.senderPublicKey))}}
+            {{shortString(transaction.asset.recipientAddress)}}
           </el-col>
         </el-row>
         <div class="spacer"></div>
@@ -76,7 +76,7 @@
             <h4>Account</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            {{shortString(getAccountFromKey(transaction.senderPublicKey))}}
+            {{shortString(transaction.asset.recipientAddress)}}
           </el-col>
         </el-row>
         <div class="spacer"></div>

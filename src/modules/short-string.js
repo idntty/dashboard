@@ -1,4 +1,5 @@
-import hashJs from 'hash.js'
+import { cryptography } from '@liskhq/lisk-client';
+
 
 export function shortString (string) {
   if (string.length <= 18) return string
@@ -8,8 +9,9 @@ export function shortString (string) {
 }
 
 
-export function getAccountFromKey (string) {
-  const pkBuf = Buffer.from(string, 'hex')
-  const hash = hashJs.sha256().update(pkBuf).digest('hex')
-  return hash.slice(0, 40)
+export function getAccountFromKey (key) {
+  const keyToBuffer = cryptography.hexToBuffer(key)
+  const addressFromPublicKey = cryptography.getAddressFromPublicKey(keyToBuffer)
+  const hexAddress = cryptography.bufferToHex(addressFromPublicKey)
+  return hexAddress
 }

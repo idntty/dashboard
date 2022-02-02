@@ -33,6 +33,13 @@ const router = new Router({
       meta: {
         layout: 'LayoutDefault'
       }
+    },
+    {
+      path :'*',
+      component: () => import('@/pages/page-404'),
+      meta: {
+        layout: 'LayoutDefault'
+      }
     }
   ]
 })
