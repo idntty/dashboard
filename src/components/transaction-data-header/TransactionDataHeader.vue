@@ -38,7 +38,7 @@
             <h4>Account</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            ** SOME ACCOUNT NUMBER **
+            {{shortString(getAccountFromKey(transaction.senderPublicKey))}}
           </el-col>
         </el-row>
         <div class="spacer"></div>
@@ -49,7 +49,7 @@
             <h4>General</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            {{shortString(transaction.asset.general)}}
+            {{shortString(transaction.asset.identity.general)}}
           </el-col>
         </el-row>
         <div class="spacer"></div>
@@ -58,7 +58,7 @@
             <h4>Nationality</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            {{shortString(transaction.asset.nationality)}}
+            {{shortString(transaction.asset.identity.nationality)}}
           </el-col>
         </el-row>
       </el-card>
@@ -76,7 +76,7 @@
             <h4>Account</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            ** SOME ACCOUNT NUMBER **
+            {{shortString(getAccountFromKey(transaction.senderPublicKey))}}
           </el-col>
         </el-row>
         <div class="spacer"></div>
@@ -87,7 +87,7 @@
             <h4>General</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            ** EMPTY **
+            {{shortString(transaction.asset.identity.general)}}
           </el-col>
         </el-row>
         <div class="spacer"></div>
@@ -96,7 +96,7 @@
             <h4>Nationality</h4>
           </el-col>
           <el-col :md="20" :xs="12">
-            ** EMPTY **
+            {{shortString(transaction.asset.identity.nationality)}}
           </el-col>
         </el-row>
       </el-card>
@@ -230,7 +230,11 @@
             :key="index"
             :gutter="20">
             <el-col>
-              {{shortString(participant)}}
+              <router-link
+                class="el-link el-link--primary"
+                :to="{name: 'account', params: { id: participant }}">
+                {{shortString(participant)}}
+              </router-link>
               <div class="spacer"></div>
             </el-col>
           </el-row>
@@ -250,7 +254,7 @@
   </div>
 </template>
 <script>
-import { shortString } from '@/modules/short-string.js'
+import { shortString, getAccountFromKey } from '@/modules/short-string.js'
 export default {
   name: 'TransactionDataHeader',
   props: {
@@ -264,7 +268,8 @@ export default {
     }
   },
   methods: {
-    shortString
+    shortString,
+    getAccountFromKey
   }
 }
 </script>

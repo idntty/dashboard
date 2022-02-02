@@ -67,7 +67,10 @@
       <h2>Last Transactions</h2>
       <div class="spacer"></div>
 
-      <TransactionsTable :transactions="transactionsList" :loading="$async.getTransactionsList.$pending"/>
+      <TransactionsTable
+        :transactions="transactionsList"
+        :loading="$async.getTransactionsList.$pending"
+        />
       <div class="spacer2x"></div>
 
       <el-button @click="getMoreTransactions" type="primary">LOAD MORE TRANSACTIONS</el-button>
@@ -95,7 +98,7 @@ export default {
       transactionsNumber: 0,
       lastBlockId: undefined,
       transactionsList: [],
-      limit: 2,
+      limit: 25,
       searchResult: null
     }
   },
@@ -115,6 +118,9 @@ export default {
     getTransactionInfo (id) {
       return api.getTransactionInfo(id)
     },
+    getTransactionsQuantity () {
+      return api.getTransactionsQuantity()
+    }
   },
   watch: {
     searchQuery (val) {
@@ -182,7 +188,16 @@ export default {
       const nodeInfo = await this.$async.getNodeInfo.$perform()
       this.peersNumber = nodeInfo.data.network.seedPeers.length
       this.blocksNumber = nodeInfo.data.height
-      this.transactionsNumber = '---'
+    } catch (e) {
+      console.error(e)
+    }
+    try {
+      const transactionsQuantity = await this.$async.getTransactionsQuantity.$perform()
+      this.transactionsNumber = transactionsQuantity.data.transactionscount
+    } catch (e) {
+      console.error(e)
+    }
+    try {
       const transactionsResponse = await this.$async.getTransactionsList.$perform(this.limit, 0)
       this.transactionsList = transactionsResponse.data
     } catch (e) {
@@ -194,15 +209,17 @@ export default {
       client = await apiClient.createWSClient(process.env.VUE_APP_WS_BASE);
       console.warn('WSclient created')
       client.subscribe('app:block:new', ({block}) => {
-        const decodedBlock = client.block.decode(Buffer(block));
-        const blockJSON = client.block.toJSON(decodedBlock);
+      // const decodedBlock = client.block.decode(block);
+      const decodedBlock = client.block.decode(Buffer(block));
+      console.log(decodedBlock.header.height, decodedBlock.header.id.toString('hex'), decodedBlock.payload.length);
+        // const blockJSON = client.block.toJSON(decodedBlock);
         // console.log(blockJSON)
         // console.log(blockJSON.payload)
         // console.log(blockJSON.payload.length)
-        if (blockJSON.payload.length) {
-          console.log('Get updated transactions list')
-          this.updateTransactionsList(blockJSON.payload)
-        }
+        // if (blockJSON.payload.length) {
+        //   console.log('Get updated transactions list')
+        //   this.updateTransactionsList(blockJSON.payload)
+        // }
       })
 
     } catch (e) {

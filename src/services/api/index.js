@@ -18,6 +18,9 @@ const api = {
   getBlockById (id) {
     return request('get', `/blocks/${id}`)
   },
+  getTransactionsQuantity () {
+    return request('get', `/node/info/transactions`)
+  },
   getTransactionsList (limit = 2, offset = 0) {
     return request('get', `/node/info/transactions/last?limit=${limit}&offset=${offset}`)
   },

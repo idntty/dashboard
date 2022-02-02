@@ -9,8 +9,8 @@
       </div>
       <el-table-column
         width="200"
-        prop="date"
-        label="Date">
+        prop="height"
+        label="Height">
       </el-table-column>
       <el-table-column
         prop="type"
@@ -47,7 +47,7 @@
         <template slot-scope="scope">
         <router-link
           class="el-link el-link--primary"
-          :to="{name: 'transaction', params: { id: scope.row.transaction, blockHeight: scope.row.height }}">
+          :to="{name: 'transaction', params: { id: scope.row.transaction }}">
             {{shortString(scope.row.transaction)}}
           </router-link>
         </template>
@@ -72,9 +72,8 @@
   </div>
 </template>
 <script>
-import hashJs from 'hash.js'
 import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
-import { shortString } from '@/modules/short-string.js'
+import { shortString, getAccountFromKey } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
   props: {
@@ -89,11 +88,14 @@ export default {
     linkToAccount: {
       type: Boolean,
       default: true
+    },
+    itemsPerPage: {
+      type: Number,
+      default: 10
     }
   },
   data () {
     return {
-      itemsPerPage: 3,
       currentPage: 1,
       transactionTypesIcons
     }
@@ -102,11 +104,10 @@ export default {
     tableData () {
       return this.transactions.map((row) => {
          return {
-          date: `no date`,
+          height: row.blockHeight || row.height || '-',
           type: defineTransactionType(row.moduleID, row.assetID),
-          account: row.senderAccount || this.hash(row.senderPublicKey),
+          account: row.senderAccount || this.getAccountFromKey(row.senderPublicKey),
           transaction: row.id,
-          height: row.height,
           fee: `${row.fee || 0} Ⱡ`
         }
       })
@@ -117,11 +118,7 @@ export default {
   },
   methods: {
     shortString,
-    hash (string) {
-      const pkBuf = Buffer.from(string, 'hex')
-      const hash = hashJs.sha256().update(pkBuf).digest('hex')
-      return hash.slice(0, 40)
-    },
+    getAccountFromKey,
     onPageChange (page) {
       this.currentPage = page
     },

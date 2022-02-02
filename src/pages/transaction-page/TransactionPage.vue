@@ -48,21 +48,12 @@
             </el-col>
           </el-row>
           <div class="spacer"></div>
-          <el-row :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Block</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              {{ $route.params.blockHeight }}
-            </el-col>
-          </el-row>
-          <div class="spacer"></div>
           <el-row  :gutter="20">
             <el-col :md="4" :xs="12">
               <h4>Sender</h4>
             </el-col>
             <el-col :md="20" :xs="12">
-              {{ shortString(transaction.senderPublicKey) }}
+              {{ shortString(getAccountFromKey(transaction.senderPublicKey)) }}
             </el-col>
           </el-row>
           <div class="spacer"></div>
@@ -110,7 +101,7 @@
 </template>
 <script>
 import api from '@/services/api/'
-import { shortString } from '@/modules/short-string.js'
+import { shortString, getAccountFromKey } from '@/modules/short-string.js'
 import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
 import TransactionDataHeader from '@/components/transaction-data-header'
 export default {
@@ -140,7 +131,8 @@ export default {
     },
   },
   methods: {
-    shortString
+    shortString,
+    getAccountFromKey
   },
   async created () {
     const {data} = await this.$async.getTransactionInfo.$perform(this.id)
