@@ -219,7 +219,6 @@ export default {
       //   const blockJSON = client.block.toJSON(decodedBlock);
       //   console.log(blockJSON)
       //   console.log(blockJSON.payload)
-      //   console.log(blockJSON.payload.length)
       //   if (blockJSON.payload.length) {
       //     console.log('Get updated transactions list')
       //     this.updateTransactionsList(blockJSON.payload)
