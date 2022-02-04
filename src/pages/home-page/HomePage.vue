@@ -216,7 +216,6 @@ export default {
       console.log('buffBlock by cryptography', buffBlock)
       const decodedBlock = client.block.decode(buffBlock);
       console.log(`decodedBlock`, decodedBlock)
-      // console.log(decodedBlock.header.height, decodedBlock.header.id.toString('hex'), decodedBlock.payload.length);
       //   const blockJSON = client.block.toJSON(decodedBlock);
       //   console.log(blockJSON)
       //   console.log(blockJSON.payload)
