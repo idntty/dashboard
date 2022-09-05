@@ -5,11 +5,11 @@ import ElementUI from 'element-ui';
 import VueAsyncOperations from 'vue-async-operations'
 
 // import 'element-ui/lib/theme-chalk/index.css';
-import 'element-theme-dark';
+// import 'element-theme-dark';
 
-import './assets/tailwind.css'
+import './assets/tailwind.scss'
 
-require('@/assets/css/main.styl')
+// require('@/assets/css/main.styl')
 
 Vue.use(ElementUI);
 Vue.use(VueAsyncOperations);
