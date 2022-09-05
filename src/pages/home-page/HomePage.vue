@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Stats/>
     <div class="container">
       <h1>Info</h1>
       <div class="spacer2x"></div>
@@ -84,11 +85,13 @@
 import api from '@/services/api/'
 import { apiClient, cryptography } from '@liskhq/lisk-client';
 import TransactionsTable from '@/components/transactions-table'
+import Stats from '@/components/stats'
 let client
 export default {
   name: 'HomePage',
   components: {
-    TransactionsTable
+    TransactionsTable,
+    Stats
   },
   data() {
     return {

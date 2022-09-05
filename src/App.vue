@@ -10,6 +10,8 @@
 <script>
 import LayoutBroker from 'vue-layout-broker'
 import LayoutDefault from '@/pages/_layouts/layout-default'
+import AOS from 'aos'
+
 const layouts = {
   LayoutDefault
 }
@@ -22,6 +24,14 @@ export default {
     return {
       layouts
     }
+  },
+  mounted() {
+    AOS.init({
+      once: true,
+      disable: 'phone',
+      duration: 600,
+      easing: 'ease-out-sine',
+    })
   }
 }
 </script>
