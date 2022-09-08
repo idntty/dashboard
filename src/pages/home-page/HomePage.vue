@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- Statistics -->
-
     <div class="grid md:grid-cols-3 bg-gray-800 divide-y md:divide-y-0 md:divide-x divide-gray-700 px-6 md:px-0 md:py-8 text-center">
       <div class="py-6 md:py-0 md:px-8">
         <div class="text-4xl font-bold leading-tight tracking-tighter text-purple-600 mb-2" data-aos="fade-up">{{blocksNumber}}</div>
@@ -28,13 +27,14 @@
         </a>
       </div>
     </div>
+    <!-- Search -->
     <div class="pt-12 md:pt-16 pb-12 md:pb-16">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="h2 mb-4">
           Search for transactions
         </h2>
       </div>
-      <form @submit.native.prevent="submitSearch">
+      <form @submit.prevent="submitSearch">
         <input
           type="text"
           class="form-input w-full text-gray-300"
@@ -42,11 +42,10 @@
           v-model="searchQuery"
           />
       </form>
-
     </div>
 
+    <!-- Search result -->
     <div class="container">
-
       <div v-if="searchResult">
         <div>{{searchResult.title}}
         <router-link
@@ -59,16 +58,18 @@
           </router-link>
         </div>
       </div>
-      <div class="spacer2x"></div>
 
-      <h2>Last Transactions</h2>
-      <div class="spacer"></div>
-
-      <TransactionsTable
-        :transactions="transactionsList"
-        :loading="$async.getTransactionsList.$pending"
-        />
-      <div class="spacer2x"></div>
+      <div class="pt-12 md:pt-16 pb-12 md:pb-16">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="h2 mb-4">
+            Last Transactions
+          </h2>
+        </div>
+        <TransactionsTable
+          :transactions="transactionsList"
+          :loading="$async.getTransactionsList.$pending"
+          />
+      </div>
 
       <el-button @click="getMoreTransactions" type="primary">LOAD MORE TRANSACTIONS</el-button>
       <div class="spacer4x"></div>

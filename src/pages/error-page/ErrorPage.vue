@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div class="container">
-      <h1>Page not found - 404</h1>
-      <div class="spacer"></div>
-    </div>
+    <h1 class="h1 mb-4">Page not found - 404</h1>
   </div>
 </template>
 <script>
