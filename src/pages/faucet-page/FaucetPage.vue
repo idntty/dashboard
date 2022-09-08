@@ -26,7 +26,7 @@
           </div>
           <div class="w-full px-3">
             <p class="block text-gray-400 text-sm font-medium text-right">
-              If you don't have an address, <a class="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="#generate-address">generate it</a>
+              If you don't have an address, <button type="button" @click="generatePassphrase" class="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">generate it</button>
             </p>
           </div>
         </div>
@@ -104,12 +104,12 @@
       </div>
 
       <!-- Avatar -->
-      <div v-if="false" class="text-gray-400 text-sm mt-6 text-center">
+      <div v-if="publicKey" class="text-gray-400 text-sm mt-6 text-center">
           <div class="mt-6 mb-6">
-            <GeneratedAvatar/>
+            <GeneratedAvatar :publicKey="publicKey"/>
           </div>
           <span>Grab your </span>
-          <a class="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="#passphrase">passphrase</a>
+          <button type="button" @click="copyPassphrase" class="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">passphrase</button>
       </div>
     </div>
 
@@ -117,6 +117,8 @@
 </template>
 
 <script>
+import {getAddressAndPublicKeyFromPassphrase, bufferToHex} from '@liskhq/lisk-cryptography';
+import { Mnemonic } from '@liskhq/lisk-passphrase'
 import api from '@/services/api/'
 import GeneratedAvatar from '@/components/generated-avatar'
 import Vue from 'vue'
@@ -135,12 +137,22 @@ export default {
       idnttyAddress: '',
       code: '',
       formStep: 1,
-      errorStatus: ''
+      errorStatus: '',
+      passphrase: undefined,
+      publicKey: undefined,
     }
   },
   computed: {
     codeOnlyNumbers () {
       return this.code.replace(/\D/g, "")
+    }
+  },
+  watch: {
+    idnttyAddress (val) {
+      if (!val.length) {
+        this.passphrase = undefined
+        this.publicKey = undefined
+      }
     }
   },
    validations: {
@@ -191,6 +203,21 @@ export default {
             this.errorStatus = 'Something went wrong, try again.'
           }
         }
+      }
+    },
+    generatePassphrase () {
+      this.publicKey = undefined
+      this.passphrase = Mnemonic.generateMnemonic()
+      const object = getAddressAndPublicKeyFromPassphrase(this.passphrase)
+      this.idnttyAddress = bufferToHex(object.address)
+      this.publicKey = bufferToHex(object.publicKey)
+    },
+    async copyPassphrase () {
+      try {
+        await navigator.clipboard.writeText(this.passphrase)
+        console.log('Copying to clipboard was successful!');
+      } catch (e) {
+        console.error('Could not copy text: ', e);
       }
     }
   }

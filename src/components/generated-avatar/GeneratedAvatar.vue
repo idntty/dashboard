@@ -4,6 +4,17 @@
 <script>
 export default {
   name: 'GeneratedAvatar',
+  props: {
+    publicKey: {
+      type: String,
+      default: undefined
+    }
+  },
+  watch: {
+    publicKey: function () {
+      this.generateSvgAvatar()
+    }
+  },
   methods: {
     createBlob (options) {
       let points = [];
@@ -38,7 +49,11 @@ export default {
       return path + "z";
     },
     generateSvgAvatar (seed, raw) {
-        const pubKey = Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16);
+      console.log('call generateSvgAvatar')
+      let pubKey = Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16);
+      if (this.publicKey !== undefined) {
+        pubKey = this.publicKey
+      }
         //pubKey = "73f47d4929d7b2b6598ca4999d52567f9bb5aef3e353e0a66b468096db6e4e88"
             let particles = [];
             let gradients = ['#000000'];
@@ -82,7 +97,6 @@ export default {
             '</g>',
           '</svg>',
         ].join('');
-        console.log(document.getElementById("generatedAvatarTag"))
         document.getElementById("generatedAvatarTag").src = raw ? svg : 'data:image/svg+xml;base64,' + btoa(svg);
         return raw ? svg : 'data:image/svg+xml;base64,' + btoa(svg);
     }
