@@ -32,6 +32,19 @@ const api = {
   },
   getTransactionInfo (id) {
     return request('get', `/transactions/${id}`)
+  },
+  getVerificationCode (account, email) {
+    return request('post', '/faucet/authorize', {
+      account,
+      email
+    })
+  },
+  getTokens (account, email, code) {
+    return request('post', '/faucet/fundbyemail', {
+      account,
+      email,
+      code
+    })
   }
 }
 

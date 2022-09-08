@@ -1,56 +1,51 @@
 <template>
   <div>
-    <GeneralStats/>
-    <div class="container">
-      <h1>Info</h1>
-      <div class="spacer2x"></div>
-      <el-row :gutter="20">
-        <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card class="counters-card" shadow="never">
-            <el-row  type="flex" align="middle" justify="space-between" :gutter="20">
-              <el-col class="counters-card__title">
-                <h3>Blocks</h3>
-              </el-col>
-              <el-col class="text-right">
-                <span class="counters-card__number">{{blocksNumber}}</span>
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-col>
-        <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card class="counters-card" shadow="never">
-            <el-row type="flex" align="middle" justify="space-between">
-              <el-col class="counters-card__title">
-                <h3>Transactions</h3>
-              </el-col>
-              <el-col class="text-right">
-                <span class="counters-card__number">{{transactionsNumber}}</span>
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-col>
-        <el-col class="el-col__bottom-margin" :xs="24" :sm="8">
-          <el-card class="counters-card" shadow="never">
-            <el-row  type="flex" align="middle" justify="space-between" :gutter="20">
-              <el-col class="counters-card__title">
-                <h3>Peers</h3>
-              </el-col>
-              <el-col class="text-right">
-                <span class="counters-card__number">{{peersNumber}}</span>
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-col>
-      </el-row>
-      <div class="spacer2x"></div>
+    <!-- Statistics -->
 
-      <h2>Search</h2>
-      <div class="spacer"></div>
-      <el-form label-position="top" @submit.native.prevent="submitSearch">
-        <el-form-item>
-          <el-input v-model="searchQuery" placeholder="Search an address or transaction"></el-input>
-        </el-form-item>
-      </el-form>
+    <div class="grid md:grid-cols-3 bg-gray-800 divide-y md:divide-y-0 md:divide-x divide-gray-700 px-6 md:px-0 md:py-8 text-center">
+      <div class="py-6 md:py-0 md:px-8">
+        <div class="text-4xl font-bold leading-tight tracking-tighter text-purple-600 mb-2" data-aos="fade-up">{{blocksNumber}}</div>
+        <div class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="200">Blocks</div>
+      </div>
+      <div class="py-6 md:py-0 md:px-8">
+        <div class="text-4xl font-bold leading-tight tracking-tighter text-purple-600 mb-2" data-aos="fade-up">{{transactionsNumber}}</div>
+        <div class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="200">Transactions</div>
+      </div>
+      <div class="py-6 md:py-0 md:px-8">
+        <div class="text-4xl font-bold leading-tight tracking-tighter text-purple-600 mb-2" data-aos="fade-up">{{peersNumber}}</div>
+        <div class="text-lg text-gray-400" data-aos="fade-up" data-aos-delay="200">Peers</div>
+      </div>
+    </div>
+    <!-- Bottom infobox -->
+    <div class="flex flex-col lg:flex-row justify-between items-center mt-12 lg:mt-6 lg:py-8 lg:border-t lg:border-b lg:border-gray-800 mb-6">
+      <div class="font-medium text-lg text-center lg:text-left mb-4 lg:mb-0">Get the native token of the Idntty blockchain and is used in all services and pay transaction fees</div>
+      <div>
+      <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700" href="#">
+          <span class="text-sm">Get it</span>
+          <svg class="w-3 h-3 fill-current text-purple-400 shrink-0 ml-2" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 5H0v2h6v4l6-5-6-5z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="pt-12 md:pt-16 pb-12 md:pb-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="h2 mb-4">
+          Search for transactions
+        </h2>
+      </div>
+      <form @submit.native.prevent="submitSearch">
+        <input
+          type="text"
+          class="form-input w-full text-gray-300"
+          placeholder="Search an address or transaction"
+          v-model="searchQuery"
+          />
+      </form>
+
+    </div>
+
+    <div class="container">
 
       <div v-if="searchResult">
         <div>{{searchResult.title}}
@@ -58,7 +53,8 @@
           class="el-link el-link--primary"
           :to="{
             name: searchResult.type,
-            params: { id: searchResult.data.id }}">
+            params: { id: searchResult.data.id }
+          }">
             {{searchResult.data.id}}
           </router-link>
         </div>
@@ -85,13 +81,11 @@
 import api from '@/services/api/'
 import { apiClient, cryptography } from '@liskhq/lisk-client';
 import TransactionsTable from '@/components/transactions-table'
-import GeneralStats from '@/components/stats'
 let client
 export default {
   name: 'HomePage',
   components: {
-    TransactionsTable,
-    GeneralStats
+    TransactionsTable
   },
   data() {
     return {
