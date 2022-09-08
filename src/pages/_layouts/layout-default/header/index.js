@@ -1,2 +1,2 @@
-import component from './Header.vue'
+import component from './LayoutHeader.vue'
 export default component

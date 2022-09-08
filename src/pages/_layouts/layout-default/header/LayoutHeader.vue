@@ -33,6 +33,8 @@
               <router-link to="/peers" class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out">Peers</router-link>
             </li>
           </ul>
+          <ul class="flex grow justify-end flex-wrap items-center">
+          </ul>
 
 
         </nav>
@@ -72,7 +74,7 @@
 
 <script>
 export default {
-  name: 'Header',
+  name: 'LayoutHeader',
   data: function () {
     return {
       mobileNavOpen: false

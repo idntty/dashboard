@@ -1,6 +1,7 @@
 <template>
+<div class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
   <div class="flex flex-col min-h-screen overflow-hidden">
-    <Header/>
+    <LayoutHeader/>
     <!-- Page content -->
     <main class="grow">
 
@@ -17,19 +18,20 @@
       <CtaContact />
 
     </main>
-    <Footer/>
+    <LayoutFooter/>
+  </div>
   </div>
 </template>
 <script>
-import Header from './header'
-import Footer from './footer'
+import LayoutHeader from './header'
+import LayoutFooter from './footer'
 import PageIllustration from '@/components/page-illustration'
 import CtaContact from '@/components/cta-contact'
 export default {
   name: 'LayoutDefault',
   components: {
-    Header,
-    Footer,
+    LayoutHeader,
+    LayoutFooter,
     PageIllustration,
     CtaContact
   }

@@ -1,2 +1,2 @@
-import component from './Stats.vue'
+import component from './GeneralStats.vue'
 export default component

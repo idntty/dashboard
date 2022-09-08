@@ -36,7 +36,7 @@ const router = new Router({
     },
     {
       path :'*',
-      component: () => import('@/pages/page-404'),
+      component: () => import('@/pages/error-page'),
       meta: {
         layout: 'LayoutDefault'
       }

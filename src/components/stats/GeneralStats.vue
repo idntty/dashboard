@@ -23,7 +23,7 @@
 <script>
 // import api from '../api'
 export default {
-  name: 'Stats',
+  name: 'GeneralStats',
   data () {
     return {
       peersNumber: 0,

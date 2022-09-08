@@ -83,6 +83,6 @@
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'LayoutFooter'
 }
 </script>

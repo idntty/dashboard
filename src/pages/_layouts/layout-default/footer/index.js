@@ -1,2 +1,2 @@
-import component from './Footer.vue'
+import component from './LayoutFooter.vue'
 export default component
