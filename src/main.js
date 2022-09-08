@@ -5,7 +5,7 @@ import ElementUI from 'element-ui';
 import VueAsyncOperations from 'vue-async-operations'
 
 import 'element-ui/lib/theme-chalk/index.css';
-import 'element-theme-dark';
+// import 'element-theme-dark';
 
 import './assets/tailwind.scss'
 

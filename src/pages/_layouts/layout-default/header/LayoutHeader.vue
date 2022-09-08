@@ -23,14 +23,8 @@
 
           <!-- Desktop menu links -->
           <ul class="flex grow justify-end flex-wrap items-center">
-            <li>
-              <router-link to="/transactions" class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out">Transactions</router-link>
-            </li>
-            <li>
-              <router-link to="/delegates" class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out">Delegates</router-link>
-            </li>
-            <li>
-              <router-link to="/peers" class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out">Peers</router-link>
+            <li v-for="(item, index) in menuItems" :key="index">
+              <router-link :to="item.route" class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out">{{item.title}}</router-link>
             </li>
           </ul>
           <ul class="flex grow justify-end flex-wrap items-center">
@@ -55,14 +49,8 @@
           <!-- Mobile navigation -->
           <nav id="mobile-nav" ref="mobileNav" class="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" :style="[ mobileNavOpen ? { maxHeight: $refs.mobileNav.scrollHeight + 'px', opacity: 1 } : { maxHeight: 0, opacity: .8 } ]">
             <ul class="bg-gray-800 px-4 py-2">
-              <li>
-                <router-link to="/transactions" class="flex text-gray-300 hover:text-gray-200 py-2">Transactions</router-link>
-              </li>
-              <li>
-                <router-link to="/delegates" class="flex text-gray-300 hover:text-gray-200 py-2">Delegates</router-link>
-              </li>
-              <li>
-                <router-link to="/peers" class="flex text-gray-300 hover:text-gray-200 py-2">Peers</router-link>
+              <li v-for="(item, index) in menuItems" :key="index">
+                <router-link :to="item.route" class="flex text-gray-300 hover:text-gray-200 py-2">{{item.title}}</router-link>
               </li>
             </ul>
           </nav>
@@ -77,7 +65,25 @@ export default {
   name: 'LayoutHeader',
   data: function () {
     return {
-      mobileNavOpen: false
+      mobileNavOpen: false,
+      menuItems: [
+        {
+          title: 'Transactions',
+          route: '/transactions'
+        },
+        {
+          title: 'Delegates',
+          route: '/delegates'
+        },
+        {
+          title: 'Peers',
+          route: '/peers'
+        },
+        {
+          title: 'Faucet',
+          route: '/faucet'
+        },
+      ]
     }
   },
   methods: {

@@ -35,6 +35,15 @@ const router = new Router({
       }
     },
     {
+      name: 'faucet',
+      path: '/faucet',
+      props: true,
+      component: () => import('@/pages/faucet-page'),
+      meta: {
+        layout: 'LayoutDefault'
+      }
+    },
+    {
       path :'*',
       component: () => import('@/pages/error-page'),
       meta: {
