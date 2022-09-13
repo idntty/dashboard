@@ -1,6 +1,125 @@
 <template>
   <div>
-    <div class="container">
+    <section>
+      <div class="pb-12 md:pb-16">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="h2 mb-4">
+            Account
+          </h2>
+        </div>
+      </div>
+
+      <div v-if="$async.getAccountInfo.$rejected" class="mb-12">
+        <el-alert
+          title="Error"
+          type="error"
+          description="Can not get account data. Try again later."
+          :closable="false"
+          show-icon
+        >
+        </el-alert>
+      </div>
+
+      <div v-if="$async.getAccountInfo.$resolved">
+        <!-- Account header box -->
+        <div class="bg-gray-800 pt-8 pb-6 px-8 mb-12">
+          <div class="flex flex-col items-left">
+            <div class="mb-6">
+              <ul class="flex flex-wrap text-xs font-medium -m-1">
+                <li class="m-1">
+                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600" href="#0">16</a>
+                </li>
+              </ul>
+            </div>
+            <div class="mb-6">
+              <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">71ccaeefe22050abc9b36ce0c1744316c11c49e1</h4>
+              <p class="text-gray-400 text-sm">Address</p>
+            </div>
+            <div class="mb-6">
+              <h4 class="h4 text-white overflow-ellipsis overflow-hidden">
+                <a href="#" class="underline">Some name</a>
+              </h4>
+              <p class="text-gray-400 text-sm">Username</p>
+            </div>
+            <div class="mb-6">
+              <h3 class="h3 text-white">999000<span class="text-sm text-gray-400">/idn</span></h3>
+              <p class="text-gray-400 text-sm">Account balance</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Account identty box -->
+        <div class="bg-gray-800 pt-8 pb-6 px-8 mb-12">
+          <div class="flex flex-col items-left">
+            <div class="mb-6">
+              <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 text-sm font-medium mb-1">First name</label>
+              <input
+                type="text"
+                class="form-input w-full text-gray-300 border-purple-600"
+                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                readonly
+              />
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 text-sm font-medium mb-1">Second name</label>
+              <input
+                type="text"
+                class="form-input w-full text-gray-300 border-purple-600"
+                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                readonly
+              />
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 text-sm font-medium mb-1">Birthdate</label>
+              <input
+                type="text"
+                class="form-input w-full text-gray-300"
+                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Account validations box -->
+        <div class="bg-gray-800 pt-8 pb-6 px-8 mb-12">
+          <div class="flex flex-col items-left">
+            <div class="mb-6">
+              <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Validations</h4>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 text-sm font-medium mb-1">firstname by
+                <a href="#" class="underline">b444b7ff3118cf2a30cbd54cfcdb8fd5d805017a</a>
+              </label>
+              <input
+                type="text"
+                class="form-input w-full text-gray-300"
+                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                readonly
+              />
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-300 text-sm font-medium mb-1">secondname by
+                <a href="#" class="underline">b444b7ff3118cf2a30cbd54cfcdb8fd5d805017a</a>
+              </label>
+              <input
+                type="text"
+                class="form-input w-full text-gray-300"
+                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- <div class="container">
       <h1>Account</h1>
       <div class="spacer2x"></div>
       <div v-if="$async.getAccountInfo.$resolved">
@@ -136,17 +255,17 @@
         </el-alert>
       </div>
 
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import api from '@/services/api/'
 import { shortString } from '@/modules/short-string.js'
-import TransactionsTable from '@/components/transactions-table'
+// import TransactionsTable from '@/components/transactions-table'
 export default {
   name: 'AccountPage',
   components: {
-    TransactionsTable
+    // TransactionsTable
   },
   props: {
     id: {

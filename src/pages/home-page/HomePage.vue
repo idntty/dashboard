@@ -71,8 +71,9 @@
           />
       </div>
 
-      <el-button @click="getMoreTransactions" type="primary">LOAD MORE TRANSACTIONS</el-button>
-      <div class="spacer4x"></div>
+      <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
+        Load more transactions
+      </button>
 
     </div>
   </div>
