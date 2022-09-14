@@ -49,7 +49,6 @@ export default {
       return path + "z";
     },
     generateSvgAvatar (seed, raw) {
-      console.log('call generateSvgAvatar')
       let pubKey = Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16) + Math.floor(Math.random()*65535*65535).toString(16);
       if (this.publicKey !== undefined) {
         pubKey = this.publicKey

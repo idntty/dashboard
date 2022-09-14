@@ -210,18 +210,15 @@ export default {
   async mounted () {
     try {
       client = await apiClient.createWSClient(process.env.VUE_APP_WS_BASE);
-      console.warn('WSclient created')
       client.subscribe('app:block:new', (data) => {
         const block = data.block
         const buffBlock = cryptography.hexToBuffer(block)
         const decodedBlock = client.block.decode(buffBlock);
         const blockJSON = client.block.toJSON(decodedBlock);
-        console.log(blockJSON)
         if (blockJSON.header) {
           this.blocksNumber = blockJSON.header.height
         }
         if (blockJSON.payload && blockJSON.payload.length) {
-          console.log('Get updated transactions list')
           this.updateTransactionsList(blockJSON.payload)
         }
       })
@@ -232,7 +229,6 @@ export default {
   },
   beforeDestroy () {
     client.disconnect().then(() => {
-      console.warn('WSclient disconnected')
     }).catch((err) => {
       console.error(err)
     });
