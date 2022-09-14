@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="max-w-3xl mx-auto text-center pb-12 md:pb-4">
-      <h1 class="h2 mb-4" data-aos="fade-up">Experiment now with testnet token</h1>
-      <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">With this token you can perform any operation in the test network absolutely free of charge. If you run out of them - don't worry, you can always always get more.</p>
-      <div class="inline-flex text-sm font-semibold py-1 px-3 m-2 text-green-600 bg-green-200 rounded-full mb-4">lskw7488a9nqy6m3zkg68x6ynsp6ohg4y7wazs3mw</div>
+      <h1 class="h2 mb-4">Experiment now with testnet token</h1>
+      <p class="text-xl text-gray-400 mb-8">With this token you can perform any operation in the test network absolutely free of charge. If you run out of them - don't worry, you can always always get more.</p>
+      <p class="mx-auto max-w-max text-sm font-semibold py-1 px-3 text-green-600 bg-green-200 rounded-full mb-4 overflow-ellipsis overflow-hidden">lskw7488a9nqy6m3zkg68x6ynsp6ohg4y7wazs3mw</p>
       <div class="my-6">
         <div class="border-t border-gray-700" aria-hidden="true"></div>
       </div>
     </div>
     <!-- Form -->
-    <div class="max-w-md mx-auto">
+    <div class="max-w-md mx-auto mb-12">
       <form @submit.prevent="submitForm">
         <div class="flex flex-wrap -mx-3 mb-4">
           <div class="w-full px-3">

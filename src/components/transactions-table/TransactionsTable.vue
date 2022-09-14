@@ -22,7 +22,7 @@
             width="200"
             trigger="hover"
             :content="scope.row.type">
-            <img slot="reference" width="25" :src="transactionTypesIcons[scope.row.type]" :alt="scope.row.type">
+            <!-- <img slot="reference" width="25" :src="" :alt="scope.row.type"> -->
           </el-popover>
         </template>
       </el-table-column>
@@ -72,7 +72,7 @@
   </div>
 </template>
 <script>
-import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
+import { defineTransactionType } from '@/modules/transaction-types.js'
 import { shortString, getAccountFromKey } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
@@ -96,8 +96,7 @@ export default {
   },
   data () {
     return {
-      currentPage: 1,
-      transactionTypesIcons
+      currentPage: 1
     }
   },
   computed: {

@@ -65,10 +65,10 @@
             Last Transactions
           </h2>
         </div>
-        <TransactionsTable
+        <!-- <TransactionsTable
           :transactions="transactionsList"
           :loading="$async.getTransactionsList.$pending"
-          />
+          /> -->
       </div>
 
       <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
@@ -82,12 +82,12 @@
 
 import api from '@/services/api/'
 import { apiClient, cryptography } from '@liskhq/lisk-client';
-import TransactionsTable from '@/components/transactions-table'
+// import TransactionsTable from '@/components/transactions-table'
 let client
 export default {
   name: 'HomePage',
   components: {
-    TransactionsTable
+    // TransactionsTable
   },
   data() {
     return {
@@ -208,20 +208,23 @@ export default {
       client = await apiClient.createWSClient(process.env.VUE_APP_WS_BASE);
       console.warn('WSclient created')
       client.subscribe('app:block:new', (data) => {
-      const block = data.block
-      console.log('block length', block.length)
-      console.log('block', block)
-      const buffBlock = cryptography.hexToBuffer(block)
-      console.log('buffBlock by cryptography', buffBlock)
-      const decodedBlock = client.block.decode(buffBlock);
-      console.log(`decodedBlock`, decodedBlock)
-      //   const blockJSON = client.block.toJSON(decodedBlock);
-      //   console.log(blockJSON)
-      //   console.log(blockJSON.payload)
-      //   if (blockJSON.payload.length) {
-      //     console.log('Get updated transactions list')
-      //     this.updateTransactionsList(blockJSON.payload)
-      //   }
+        const block = data.block
+        const buffBlock = cryptography.hexToBuffer(block)
+        const decodedBlock = client.block.decode(buffBlock);
+        // console.log('block length', block.length)
+        // console.log('block', block)
+        // console.log('buffBlock by cryptography', buffBlock)
+        // console.log(`decodedBlock`, decodedBlock)
+        // console.log(blockJSON)
+        // console.log(blockJSON.payload)
+        const blockJSON = client.block.toJSON(decodedBlock);
+        if (blockJSON.header) {
+          this.blocksNumber = blockJSON.header.height
+        }
+        if (blockJSON.payload.length) {
+          console.log('Get updated transactions list')
+          this.updateTransactionsList(blockJSON.payload)
+        }
       })
 
     } catch (e) {

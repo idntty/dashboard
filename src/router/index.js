@@ -18,7 +18,7 @@ const router = new Router({
     },
     {
       name: 'account',
-      path: '/account/:id',
+      path: '/accounts/:id',
       props: true,
       component: () => import('@/pages/account-page'),
       meta: {
@@ -27,7 +27,7 @@ const router = new Router({
     },
     {
       name: 'transaction',
-      path: '/transaction/:id',
+      path: '/transactions/:id',
       props: true,
       component: () => import('@/pages/transaction-page'),
       meta: {

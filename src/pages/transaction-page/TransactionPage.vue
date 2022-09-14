@@ -9,15 +9,13 @@
         </div>
       </div>
 
-      <div v-if="$async.getTransactionInfo.$rejected" class="mb-12">
-        <el-alert
-          title="Error"
-          type="error"
-          description="Can not get transaction data. Try again later."
-          :closable="false"
-          show-icon
-        >
-        </el-alert>
+      <div v-if="$async.getTransactionInfo.$rejected">
+        <div class="flex bg-red-100 rounded-lg p-4 text-red-700" role="alert">
+          <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+          <div>
+            <span class="font-medium">Error!</span> Can not get transaction data. Try again later.
+          </div>
+        </div>
       </div>
 
       <div v-if="$async.getTransactionInfo.$resolved">
@@ -27,25 +25,28 @@
             <div class="mb-6">
               <ul class="flex flex-wrap text-xs font-medium -m-1">
                 <li class="m-1">
-                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600" href="#0">Identity</a>
-                </li>
-                <li class="m-1">
-                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-blue-500" href="#0">Verification</a>
+                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full" :class="`bg-${transactionColor}`" href="#0">{{transactionName}}</a>
                 </li>
               </ul>
             </div>
             <div class="mb-6">
-              <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">5127f39c3757009a9f2eba0961f5e9792e6c9dac51e51e3d633c2a52eb008649</h4>
+              <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">
+                {{transaction.id}}
+              </h4>
               <p class="text-gray-400 text-sm">Transaction ID</p>
             </div>
             <div class="mb-6">
               <h4 class="h4 text-white overflow-ellipsis overflow-hidden">
-                <a href="#" class="underline">58a31e982f7838afc2b64e55216355be7273abeb4140f65f5a2d655ea18c85c4</a>
+                <router-link
+                  class="underline"
+                  :to="{name: 'account', params: { id: getAccountFromKey(transaction.senderPublicKey)} }">
+                  {{ transaction.senderPublicKey }}
+                </router-link>
               </h4>
               <p class="text-gray-400 text-sm">Sender Public Key</p>
             </div>
             <div class="mb-6">
-              <h3 class="h3 text-white">0.056<span class="text-sm text-gray-400">/tx</span></h3>
+              <h3 class="h3 text-white">{{transaction.fee}}<span class="text-sm text-gray-400">/tx</span></h3>
               <p class="text-gray-400 text-sm">Transaction Fee</p>
             </div>
 
@@ -58,148 +59,30 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
             </div>
-            <div class="mb-6">
-              <label class="block text-gray-300 text-sm font-medium mb-1">First name</label>
+            <div class="mb-6"
+              v-for="(item, index) in transaction.asset.features" :key="index"
+            >
+              <label class="block text-gray-300 text-sm font-medium mb-1">{{item.label}}</label>
               <input
                 type="text"
-                class="form-input w-full text-gray-300 border-purple-600"
-                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
-                readonly
-              />
-            </div>
-            <div class="mb-6">
-              <label class="block text-gray-300 text-sm font-medium mb-1">Second name</label>
-              <input
-                type="text"
-                class="form-input w-full text-gray-300 border-green-400"
-                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
-                readonly
-              />
-            </div>
-            <div class="mb-6">
-              <label class="block text-gray-300 text-sm font-medium mb-1">Removed\Invalidated field</label>
-              <input
-                type="text"
-                class="form-input w-full text-gray-300 border-red-600"
-                value="0d5897b05c83ea27a01fdfd5ab7a533df9051d6069c991251e20e95d436dbe25"
+                class="form-input w-full text-gray-300"
+                :class="`border-${transactionColor}`"
+                :value="item.value"
                 readonly
               />
             </div>
           </div>
         </div>
       </div>
-
     </section>
-
-    <!-- <div class="container">
-      <h1>Transaction</h1>
-      <div class="spacer2x"></div>
-
-      <div v-if="$async.getTransactionInfo.$resolved">
-        <TransactionDataHeader
-          :transaction="transaction"
-          :transactionType="transactionType"
-        />
-        <el-card
-          shadow="never">
-          <div slot="header" class="clearfix">
-            <h3>Info</h3>
-          </div>
-          <el-row  :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Id</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              {{ shortString(transaction.id) }}
-            </el-col>
-          </el-row>
-          <div class="spacer"></div>
-          <el-row :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Type</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              <el-popover
-                placement="top-start"
-                title="Transaction type"
-                width="200"
-                trigger="hover"
-                :content="transactionType">
-                <img slot="reference" width="25" :src="transactionTypesIcons[transactionType]" :alt="transactionType">
-              </el-popover>
-            </el-col>
-          </el-row>
-          <div class="spacer"></div>
-          <el-row  :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Fee</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              {{ transaction.fee }} T
-            </el-col>
-          </el-row>
-          <div class="spacer"></div>
-          <el-row  :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Sender</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              {{ shortString(getAccountFromKey(transaction.senderPublicKey)) }}
-            </el-col>
-          </el-row>
-          <div class="spacer"></div>
-          <div class="hr"></div>
-          <div class="spacer"></div>
-
-
-          <el-row :gutter="20">
-            <el-col :md="4" :xs="12">
-              <h4>Signatures</h4>
-            </el-col>
-            <el-col :md="20" :xs="12">
-              <div>
-                <el-row
-                  v-for="signature in transaction.signatures"
-                  :key="signature"
-                  :gutter="20">
-                  <el-col>
-                    {{ shortString(signature) }}
-                    <div class="spacer"></div>
-                  </el-col>
-                </el-row>
-              </div>
-            </el-col>
-          </el-row>
-        </el-card>
-      </div>
-
-      <div v-if="$async.getTransactionInfo.$rejected">
-        <el-alert
-          title="Error"
-          type="error"
-          description="Can not get transaction data. Try again later."
-          :closable="false"
-          show-icon
-        >
-        </el-alert>
-      </div>
-
-      <div class="spacer4x"></div>
-
-
-    </div> -->
   </div>
 </template>
 <script>
 import api from '@/services/api/'
-import { shortString, getAccountFromKey } from '@/modules/short-string.js'
-import { defineTransactionType, transactionTypesIcons } from '@/modules/transaction-types.js'
-// import TransactionDataHeader from '@/components/transaction-data-header'
+import { getAccountFromKey } from '@/modules/short-string.js'
+import { defineTransactionType, transactionNameByType, transactionColorByType } from '@/modules/transaction-types.js'
 export default {
   name: 'TransactionPage',
-  components: {
-    // TransactionDataHeader
-  },
   props: {
     id: {
       type: String
@@ -207,13 +90,18 @@ export default {
   },
   data() {
     return {
-      transaction: undefined,
-      transactionTypesIcons
+      transaction: undefined
     }
   },
   computed: {
     transactionType () {
       return defineTransactionType(this.transaction.moduleID, this.transaction.assetID)
+    },
+    transactionName () {
+      return transactionNameByType[this.transactionType]
+    },
+    transactionColor () {
+      return transactionColorByType[this.transactionType]
     }
   },
   asyncOperations: {
@@ -222,7 +110,6 @@ export default {
     },
   },
   methods: {
-    shortString,
     getAccountFromKey
   },
   async created () {
