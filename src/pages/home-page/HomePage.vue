@@ -196,7 +196,7 @@ export default {
     }
     try {
       const transactionsQuantity = await this.$async.getTransactionsQuantity.$perform()
-      this.transactionsNumber = transactionsQuantity.data.transactionscount
+      this.transactionsNumber = transactionsQuantity.meta.total
     } catch (e) {
       console.error(e)
     }
@@ -215,11 +215,6 @@ export default {
         const block = data.block
         const buffBlock = cryptography.hexToBuffer(block)
         const decodedBlock = client.block.decode(buffBlock);
-        // console.log('block length', block.length)
-        // console.log('block', block)
-        // console.log('buffBlock by cryptography', buffBlock)
-        // console.log(`decodedBlock`, decodedBlock)
-        // console.log(blockJSON.payload)
         const blockJSON = client.block.toJSON(decodedBlock);
         console.log(blockJSON)
         if (blockJSON.header) {

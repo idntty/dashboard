@@ -28,15 +28,15 @@ export const transactionNameByType = {
   unknown: 'Unknown'
 }
 export const transactionColorByType = {
-  setFeature: {bg: 'purple-600', border: 'purple-600'},
-  removeFeature: {bg: 'red-600', border: 'red-600'},
-  validateFeature: {bg: 'green-400', border: 'green-400'},
-  invalidateFeature: {bg: 'red-600', border: 'red-600'},
-  setAuthority: {bg: 'blue-500', border: 'blue-500'},
-  delegateAuthority: {bg: 'blue-500', border: 'blue-500'},
-  undelegateAuthority: {bg: 'blue-500', border: 'blue-500'},
-  proceed: {bg: 'blue-500', border: 'blue-500'},
-  unknown: {bg: 'blue-500', border: 'blue-500'}
+  setFeature: {bg: 'bg-purple-600', border: 'border-purple-600'},
+  removeFeature: {bg: 'bg-red-600', border: 'border-red-600'},
+  validateFeature: {bg: 'bg-green-600', border: 'border-green-400'},
+  invalidateFeature: {bg: 'bg-red-600', border: 'border-red-600'},
+  setAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
+  delegateAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
+  undelegateAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
+  proceed: {bg: 'bg-blue-500', border: 'border-blue-500'},
+  unknown: {bg: 'bg-blue-500', border: 'border-blue-500'}
 }
 
 

@@ -25,7 +25,7 @@
             <div class="mb-6">
               <ul class="flex flex-wrap text-xs font-medium -m-1">
                 <li class="m-1">
-                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full" :class="transactionBgClass" href="#0">{{transactionName}}</a>
+                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full" :class="transactionColor.bg" href="#0">{{transactionName}}</a>
                 </li>
               </ul>
             </div>
@@ -67,7 +67,7 @@
                 <input
                   type="text"
                   class="form-input w-full text-gray-300"
-                  :class="transactionBorderClass"
+                  :class="transactionColor.border"
                   :value="item.value"
                   readonly
                 />
@@ -107,12 +107,6 @@ export default {
     },
     transactionColor () {
       return transactionColorByType[this.transactionType]
-    },
-    transactionBgClass () {
-      return `bg-${this.transactionColor.bg}`
-    },
-    transactionBorderClass () {
-      return `border-${this.transactionColor.border}`
     }
   },
   asyncOperations: {
