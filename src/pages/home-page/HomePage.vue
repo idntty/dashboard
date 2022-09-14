@@ -45,37 +45,35 @@
     </div>
 
     <!-- Search result -->
-    <div class="container">
-      <div v-if="searchResult">
-        <div>{{searchResult.title}}
-        <router-link
-          class="el-link el-link--primary"
-          :to="{
-            name: searchResult.type,
-            params: { id: searchResult.data.id }
-          }">
-            {{searchResult.data.id}}
-          </router-link>
-        </div>
+    <div v-if="searchResult" class="text-center">
+      <div>{{searchResult.title}}
+      <router-link
+        class="text-purple-600"
+        :to="{
+          name: searchResult.type,
+          params: { id: searchResult.data.id }
+        }">
+          {{searchResult.data.id}}
+        </router-link>
       </div>
-
-      <div class="pt-12 md:pt-16 pb-12 md:pb-16">
-        <div class="max-w-3xl mx-auto text-center">
-          <h2 class="h2 mb-4">
-            Last Transactions
-          </h2>
-        </div>
-        <!-- <TransactionsTable
-          :transactions="transactionsList"
-          :loading="$async.getTransactionsList.$pending"
-          /> -->
-      </div>
-
-      <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
-        Load more transactions
-      </button>
-
     </div>
+
+    <div class="pt-12 md:pt-16 pb-12 md:pb-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="h2 mb-4">
+          Last Transactions
+        </h2>
+      </div>
+      <!-- <TransactionsTable
+        :transactions="transactionsList"
+        :loading="$async.getTransactionsList.$pending"
+        /> -->
+    </div>
+
+    <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
+      Load more transactions
+    </button>
+
   </div>
 </template>
 <script>
