@@ -35,7 +35,7 @@
             </div>
             <div class="mb-6">
               <h4 class="h4 text-white overflow-ellipsis overflow-hidden">
-                <a href="#" class="underline">Some name</a>
+                {{accountUsername}}
               </h4>
               <p class="text-gray-400 text-sm">Username</p>
             </div>
@@ -53,17 +53,22 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
             </div>
-            <div class="mb-6"
-              v-for="(item, index) in account.identity.features" :key="index"
-            >
-              <label class="block text-gray-300 text-sm font-medium mb-1">{{item.label}}</label>
-              <input
-                type="text"
-                class="form-input w-full text-gray-300"
-                :class="{'border-purple-600': checkFeatureValidated(item.label)}"
-                :value="item.value"
-                readonly
-              />
+            <div v-if="account.identity.features.length">
+              <div class="mb-6"
+                v-for="(item, index) in account.identity.features" :key="index"
+              >
+                <label class="block text-gray-300 text-sm font-medium mb-1">{{item.label}}</label>
+                <input
+                  type="text"
+                  class="form-input w-full text-gray-300"
+                  :class="{'border-purple-600': checkFeatureValidated(item.label)}"
+                  :value="item.value"
+                  readonly
+                />
+              </div>
+            </div>
+            <div v-else class="mb-6">
+              <p class="text-gray-300">No Identity Items Found</p>
             </div>
           </div>
         </div>
@@ -119,6 +124,11 @@ export default {
     return {
       account: {},
       // transactions: [],
+    }
+  },
+  computed: {
+    accountUsername () {
+      return this.account.dpos.delegate.username.length ? this.account.dpos.delegate.username : '-'
     }
   },
   asyncOperations: {

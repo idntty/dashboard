@@ -1,66 +1,55 @@
 <template>
   <div>
-    <el-table
-      :data="tableDataPaginated.data"
-        v-loading="loading"
-      style="width: 100%">
-      <div slot="empty">
-        NO DATA
-      </div>
-      <el-table-column
-        width="200"
-        prop="height"
-        label="Height">
-      </el-table-column>
-      <el-table-column
-        prop="type"
-        label="Type">
-        <template slot-scope="scope">
-          <el-popover
-            placement="top-start"
-            title="Transaction type"
-            width="200"
-            trigger="hover"
-            :content="scope.row.type">
-            <!-- <img slot="reference" width="25" :src="" :alt="scope.row.type"> -->
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column
-        width="320"
-        prop="account"
-        label="Account">
-        <template slot-scope="scope">
-            <router-link
-              v-if="linkToAccount"
-              class="el-link el-link--primary"
-              :to="{name: 'account', params: { id: scope.row.account }}">
-              {{shortString(scope.row.account)}}
-            </router-link>
-            <div v-else>{{shortString(scope.row.account)}}</div>
-        </template>
-      </el-table-column>
-      <el-table-column
-        width="320"
-        prop="transaction"
-        label="Transaction">
-        <template slot-scope="scope">
-        <router-link
-          class="el-link el-link--primary"
-          :to="{name: 'transaction', params: { id: scope.row.transaction }}">
-            {{shortString(scope.row.transaction)}}
-          </router-link>
-        </template>
-      </el-table-column>
-      <el-table-column
-        width="100"
-        prop="fee"
-        label="Fee">
-      </el-table-column>
-    </el-table>
-    <div class="spacer"
+    <div class="overflow-x-auto relative">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th class="py-3 px-6"> Height</th>
+            <th class="py-3 px-6"> Type</th>
+            <th class="py-3 px-6"> Account</th>
+            <th class="py-3 px-6"> Transaction</th>
+            <th class="py-3 px-6"> Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item, index) in tableDataPaginated.data" :key="index"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          >
+            <td class="py-4 px-6">
+                {{item.height}}
+            </td>
+            <td class="py-4 px-6">
+                {{item.type}}
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap	">
+              <router-link
+                v-if="linkToAccount"
+                class="text-purple-600"
+                :to="{name: 'account', params: { id: item.account }}">
+                {{shortString(item.account)}}
+              </router-link>
+              <div v-else>{{shortString(item.account)}}</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap	">
+              <router-link
+                class="text-purple-600"
+                :to="{name: 'transaction', params: { id: item.transaction }}">
+                  {{shortString(item.transaction)}}
+              </router-link>
+            </td>
+            <td class="py-4 px-6">
+                {{item.fee}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mb-6"
       v-if="tableData.length > itemsPerPage"
     ></div>
+
     <el-pagination
       background
       hide-on-single-page
@@ -72,7 +61,7 @@
   </div>
 </template>
 <script>
-import { defineTransactionType } from '@/modules/transaction-types.js'
+import { defineTransactionType, transactionNameByType } from '@/modules/transaction-types.js'
 import { shortString, getAccountFromKey } from '@/modules/short-string.js'
 export default {
   name: 'TransactionsTable',
@@ -91,12 +80,12 @@ export default {
     },
     itemsPerPage: {
       type: Number,
-      default: 10
+      default: 25
     }
   },
   data () {
     return {
-      currentPage: 1
+      currentPage: 1,
     }
   },
   computed: {
@@ -104,10 +93,10 @@ export default {
       return this.transactions.map((row) => {
          return {
           height: row.blockHeight || row.height || '-',
-          type: defineTransactionType(row.moduleID, row.assetID),
-          account: row.senderAccount || this.getAccountFromKey(row.senderPublicKey),
+          type: transactionNameByType[defineTransactionType(row.moduleID, row.assetID)],
+          account: getAccountFromKey(row.senderPublicKey),
           transaction: row.id,
-          fee: `${row.fee || 0} Ⱡ`
+          fee: `${row.fee || 0}`
         }
       })
     },
@@ -117,7 +106,6 @@ export default {
   },
   methods: {
     shortString,
-    getAccountFromKey,
     onPageChange (page) {
       this.currentPage = page
     },

@@ -58,21 +58,24 @@
       </div>
     </div>
 
-    <div class="pt-12 md:pt-16 pb-12 md:pb-16">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="h2 mb-4">
-          Last Transactions
-        </h2>
+    <!-- Transsactions data -->
+    <div v-if="transactionsList.length">
+      <div class="pt-12 md:pt-16 pb-12 md:pb-16">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="h2 mb-4">
+            Last Transactions
+          </h2>
+        </div>
+        <TransactionsTable
+          :transactions="transactionsList"
+          :loading="$async.getTransactionsList.$pending"
+          />
       </div>
-      <!-- <TransactionsTable
-        :transactions="transactionsList"
-        :loading="$async.getTransactionsList.$pending"
-        /> -->
+      <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
+        Load more transactions
+      </button>
     </div>
 
-    <button @click="getMoreTransactions" class="btn text-white bg-purple-600 hover:bg-purple-700">
-      Load more transactions
-    </button>
 
   </div>
 </template>
@@ -80,12 +83,14 @@
 
 import api from '@/services/api/'
 import { apiClient, cryptography } from '@liskhq/lisk-client';
-// import TransactionsTable from '@/components/transactions-table'
+import { shortString, getAccountFromKey } from '@/modules/short-string.js'
+import { defineTransactionType, transactionNameByType } from '@/modules/transaction-types.js'
+import TransactionsTable from '@/components/transactions-table'
 let client
 export default {
   name: 'HomePage',
   components: {
-    // TransactionsTable
+    TransactionsTable
   },
   data() {
     return {
@@ -96,15 +101,13 @@ export default {
       lastBlockId: undefined,
       transactionsList: [],
       limit: 25,
-      searchResult: null
+      searchResult: null,
+      transactionNameByType
     }
   },
   asyncOperations: {
     getNodeInfo () {
       return api.getNodeInfo()
-    },
-    getBlockData (blockId) {
-      return api.getBlockById(blockId)
     },
     getTransactionsList (limit, offset) {
       return api.getTransactionsList(limit, offset)
@@ -127,6 +130,9 @@ export default {
     }
   },
   methods: {
+    defineTransactionType,
+    shortString,
+    getAccountFromKey,
     async submitSearch () {
       if (this.searchQuery.length === 64) {
         try {
@@ -167,7 +173,7 @@ export default {
       }
     },
     updateTransactionsList (newTransactions) {
-      this.transactionsList.unshift(newTransactions)
+      this.transactionsList = newTransactions.concat(this.transactionsList)
     },
     async getMoreTransactions () {
       try {
@@ -213,13 +219,13 @@ export default {
         // console.log('block', block)
         // console.log('buffBlock by cryptography', buffBlock)
         // console.log(`decodedBlock`, decodedBlock)
-        // console.log(blockJSON)
         // console.log(blockJSON.payload)
         const blockJSON = client.block.toJSON(decodedBlock);
+        console.log(blockJSON)
         if (blockJSON.header) {
           this.blocksNumber = blockJSON.header.height
         }
-        if (blockJSON.payload.length) {
+        if (blockJSON.payload && blockJSON.payload.length) {
           console.log('Get updated transactions list')
           this.updateTransactionsList(blockJSON.payload)
         }

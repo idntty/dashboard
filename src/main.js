@@ -1,17 +1,16 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import ElementUI from 'element-ui';
+import {Pagination as ElPagination} from 'element-ui';
 import VueAsyncOperations from 'vue-async-operations'
 
 import 'element-ui/lib/theme-chalk/index.css';
-// import 'element-theme-dark';
 
 import './assets/tailwind.scss'
 
 require('@/assets/css/main.styl')
 
-Vue.use(ElementUI);
+Vue.use(ElPagination);
 Vue.use(VueAsyncOperations);
 
 Vue.config.productionTip = false

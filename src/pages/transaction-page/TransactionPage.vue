@@ -25,7 +25,7 @@
             <div class="mb-6">
               <ul class="flex flex-wrap text-xs font-medium -m-1">
                 <li class="m-1">
-                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full" :class="`bg-${transactionColor}`" href="#0">{{transactionName}}</a>
+                  <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full" :class="transactionBgClass" href="#0">{{transactionName}}</a>
                 </li>
               </ul>
             </div>
@@ -59,17 +59,22 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
             </div>
-            <div class="mb-6"
-              v-for="(item, index) in transaction.asset.features" :key="index"
-            >
-              <label class="block text-gray-300 text-sm font-medium mb-1">{{item.label}}</label>
-              <input
-                type="text"
-                class="form-input w-full text-gray-300"
-                :class="`border-${transactionColor}`"
-                :value="item.value"
-                readonly
-              />
+            <div v-if="transaction.asset.features.length">
+              <div class="mb-6"
+                v-for="(item, index) in transaction.asset.features" :key="index"
+              >
+                <label class="block text-gray-300 text-sm font-medium mb-1">{{item.label}}</label>
+                <input
+                  type="text"
+                  class="form-input w-full text-gray-300"
+                  :class="transactionBorderClass"
+                  :value="item.value"
+                  readonly
+                />
+              </div>
+            </div>
+            <div v-else class="mb-6">
+              <p class="text-gray-300">No Identity Items Found</p>
             </div>
           </div>
         </div>
@@ -102,6 +107,12 @@ export default {
     },
     transactionColor () {
       return transactionColorByType[this.transactionType]
+    },
+    transactionBgClass () {
+      return `bg-${this.transactionColor.bg}`
+    },
+    transactionBorderClass () {
+      return `border-${this.transactionColor.border}`
     }
   },
   asyncOperations: {

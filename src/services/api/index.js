@@ -15,14 +15,14 @@ const api = {
   getNodeInfo () {
     return request('get', '/node/info')
   },
-  getBlockById (id) {
+  getBlockById (id) { // not used
     return request('get', `/blocks/${id}`)
   },
-  getTransactionsQuantity () {
-    return request('get', `/node/info/transactions`)
+  getTransactionsQuantity () { // isn`t working
+    return request('get', `/node/transactions`)
   },
-  getTransactionsList (limit = 2, offset = 0) {
-    return request('get', `/node/info/transactions/last?limit=${limit}&offset=${offset}`)
+  getTransactionsList (limit = 2, offset = 0) { // isn`t working
+    return request('get', `/node/transactions/last?limit=${limit}&offset=${offset}`)
   },
   getAccountInfo (id) {
     return request('get', `/accounts/${id}`)
