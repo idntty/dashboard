@@ -59,7 +59,7 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
             </div>
-            <div v-if="transaction.asset.features.length">
+            <div v-if="transaction.asset.features && transaction.asset.features.length">
               <div class="mb-6"
                 v-for="(item, index) in transaction.asset.features" :key="index"
               >

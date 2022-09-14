@@ -9,7 +9,7 @@
       <div class="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
         <PageIllustration />
       </div>
-      <div class="py-12 md:py-20 pt-32 md:pt-40 pb-12 md:pb-20">
+      <div class="relative py-12 md:py-20 pt-32 md:pt-40 pb-12 md:pb-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
           <slot></slot> <!-- page content will be rendered instead of <slot></slot> -->
         </div>

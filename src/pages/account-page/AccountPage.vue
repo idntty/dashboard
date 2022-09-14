@@ -53,7 +53,7 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Identity</h4>
             </div>
-            <div v-if="account.identity.features.length">
+            <div v-if="account.identity.features && account.identity.features.length">
               <div class="mb-6"
                 v-for="(item, index) in account.identity.features" :key="index"
               >
@@ -79,7 +79,7 @@
             <div class="mb-6">
               <h4 class="h4 text-purple-600 overflow-ellipsis overflow-hidden">Validations</h4>
             </div>
-            <div v-if="account.identity.verifications.length">
+            <div v-if="account.identity.verifications && account.identity.verifications.length">
               <div class="mb-6"
                 v-for="(item, index) in account.identity.verifications" :key="index"
               >
