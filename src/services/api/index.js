@@ -18,10 +18,10 @@ const api = {
   getBlockById (id) { // not used
     return request('get', `/blocks/${id}`)
   },
-  getTransactionsQuantity () { // isn`t working
+  getTransactionsQuantity () {
     return request('get', `/node/transactions`)
   },
-  getTransactionsList (limit = 2, offset = 0) { // isn`t working
+  getTransactionsList (limit = 2, offset = 0) {
     return request('get', `/node/transactions/last?limit=${limit}&offset=${offset}`)
   },
   getAccountInfo (id) {

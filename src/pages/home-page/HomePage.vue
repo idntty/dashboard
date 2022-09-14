@@ -194,12 +194,12 @@ export default {
     } catch (e) {
       console.error(e)
     }
-    try {
-      const transactionsQuantity = await this.$async.getTransactionsQuantity.$perform()
-      this.transactionsNumber = transactionsQuantity.meta.total
-    } catch (e) {
-      console.error(e)
-    }
+    // try {
+    //   const transactionsQuantity = await this.$async.getTransactionsQuantity.$perform()
+    //   this.transactionsNumber = transactionsQuantity.meta.total
+    // } catch (e) {
+    //   console.error(e)
+    // }
     try {
       const transactionsResponse = await this.$async.getTransactionsList.$perform(this.limit, 0)
       this.transactionsList = transactionsResponse.data

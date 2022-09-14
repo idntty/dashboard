@@ -28,6 +28,33 @@
             </li>
           </ul>
           <ul class="flex grow justify-end flex-wrap items-center">
+            <div class="flex items-center">
+            <span class="mr-3 text-sm text-gray-300">Testnet</span>
+            <label class="inline-flex relative items-center cursor-pointer">
+              <input @change="toggleNet" type="checkbox" :value="isMainnet" class="sr-only peer">
+              <div class="
+                w-11 h-6
+                rounded-full
+                bg-purple-600
+                peer
+                peer-checked:after:translate-x-full
+                peer-checked:after:border-white
+                peer-checked:bg-green-400
+                after:content-['']
+                after:absolute
+                after:top-0.5
+                after:left-[2px]
+                after:bg-white
+                after:border-white
+                after:border
+                after:rounded-full
+                after:h-5
+                after:w-5
+                after:transition-all"
+              ></div>
+            </label>
+              <span class="ml-3 text-sm text-gray-300">Mainnet</span>
+            </div>
           </ul>
 
 
@@ -53,6 +80,35 @@
                 <router-link :to="item.route" class="flex text-gray-300 hover:text-gray-200 py-2">{{item.title}}</router-link>
               </li>
             </ul>
+          <ul class="bg-gray-800 px-4 py-2">
+            <div class="flex items-center">
+            <span class="mr-3 text-sm text-gray-300">Testnet</span>
+            <label class="inline-flex relative items-center cursor-pointer">
+              <input @change="toggleNet" type="checkbox" :value="isMainnet" class="sr-only peer">
+              <div class="
+                w-11 h-6
+                rounded-full
+                bg-purple-600
+                peer
+                peer-checked:after:translate-x-full
+                peer-checked:after:border-white
+                peer-checked:bg-green-400
+                after:content-['']
+                after:absolute
+                after:top-0.5
+                after:left-[2px]
+                after:bg-white
+                after:border-white
+                after:border
+                after:rounded-full
+                after:h-5
+                after:w-5
+                after:transition-all"
+              ></div>
+            </label>
+              <span class="ml-3 text-sm text-gray-300">Mainnet</span>
+            </div>
+          </ul>
           </nav>
         </div>
       </div>
@@ -83,7 +139,8 @@ export default {
           title: 'Faucet',
           route: '/faucet'
         },
-      ]
+      ],
+      isMainnet: false
     }
   },
   methods: {
@@ -94,6 +151,9 @@ export default {
     keyPress() {
       if (!this.mobileNavOpen || event.keyCode !== 27) return
       this.mobileNavOpen = false
+    },
+    toggleNet () {
+      this.isMainnet = !this.isMainnet
     }
   },
   mounted() {
