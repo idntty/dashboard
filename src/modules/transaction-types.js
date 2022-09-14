@@ -9,6 +9,8 @@ export function defineTransactionType (moduleId, assetId) {
     case 'mid1002_aid2': return 'delegateAuthority'
     case 'mid1003_aid3': return 'undelegateAuthority'
 
+    case 'mid2_aid0': return 'transfer'
+
     case 'mid1010_aid1': return 'proceed'
     default:
       return 'unknown'
@@ -24,6 +26,7 @@ export const transactionNameByType = {
   setAuthority: 'Set Authority',
   delegateAuthority: 'Delegate Authority',
   undelegateAuthority: 'Undelegate Authority',
+  transfer: 'Transfer',
   proceed: 'Proceed',
   unknown: 'Unknown'
 }
@@ -35,6 +38,7 @@ export const transactionColorByType = {
   setAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
   delegateAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
   undelegateAuthority: {bg: 'bg-blue-500', border: 'border-blue-500'},
+  transfer: {bg: 'bg-teal-500', border: 'border-teal-500'},
   proceed: {bg: 'bg-blue-500', border: 'border-blue-500'},
   unknown: {bg: 'bg-blue-500', border: 'border-blue-500'}
 }

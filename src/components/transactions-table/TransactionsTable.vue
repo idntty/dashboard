@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="overflow-x-auto relative">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left text-gray-400">
+        <thead class="text-xs uppercase bg-gray-700">
           <tr>
             <th class="py-3 px-6"> Height</th>
             <th class="py-3 px-6"> Type</th>
@@ -14,7 +14,7 @@
         <tbody>
           <tr
             v-for="(item, index) in tableDataPaginated.data" :key="index"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+            class="border-b bg-gray-800 border-gray-700"
           >
             <td class="py-4 px-6">
                 {{item.height}}
