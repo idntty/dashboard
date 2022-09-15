@@ -25,7 +25,7 @@ export default {
       layouts
     }
   },
-  mounted() {
+  mounted () {
     AOS.init({
       once: true,
       disable: 'phone',
